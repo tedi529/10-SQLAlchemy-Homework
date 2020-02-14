@@ -95,12 +95,7 @@ def calc_temp(start_date):
     results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
                 .filter(Measurement.date >= start_date).all()
 
-    session.close()
-    for start_date in session.query(Measurement.date).all():
-        return jsonify(results)
-    else:
-        return jsonify({"error": f"{start_date} not in acceptable start_date range."}), 404
-                        
+    session.close()                     
 
 @app.route("/api/v1.0/<start_date>/<end_date>")
 def calc_temps(start_date, end_date):
@@ -113,7 +108,7 @@ def calc_temps(start_date, end_date):
     session.close()
 
     return jsonify(results)
-
+    
 if __name__ == '__main__':
     app.run(debug=True)
 
