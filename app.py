@@ -95,7 +95,9 @@ def calc_temp(start_date):
     results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
                 .filter(Measurement.date >= start_date).all()
 
-    session.close()                     
+    session.close()
+
+    return jsonify(results)                     
 
 @app.route("/api/v1.0/<start_date>/<end_date>")
 def calc_temps(start_date, end_date):
